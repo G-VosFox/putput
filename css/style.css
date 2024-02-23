@@ -47,7 +47,8 @@ body {
 
 #heroSpeech {
     width: 300px;
-    background-color: #FFFFFF;
+    color: white;
+    margin-left: 100px;
 }
 
 #counterSpeech {
@@ -58,9 +59,14 @@ body {
 #counterAvatar {
     width: 100px;
     height: 100px;
-    background-color: #FF0000;
     bottom: 0px;
     right: 0px;
+}
+#luigiAvatar {
+    height: 100px;
+    bottom: 0px;
+    right: 0px;
+    margin-left: 37px;
 }
 
 #squareTree {
