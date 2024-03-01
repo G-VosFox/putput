@@ -19,8 +19,16 @@ const inventoryList = document.getElementById("inventoryList");
 const mainCharacter = document.getElementById("hero");
 const offsetCharacter = 16;
 const tree1 = document.getElementById("squareTree");
+
+//speeches
 const playerTalk = document.getElementById("heroSpeech");
 const otherTalk = document.getElementById("counterSpeech");
+
+const luigiHead = document.getElementById("luigiAvatar");
+
+//audio for dialog
+const heroAudio = document.getElementById("heroAudio");
+const counterAudio = document.getElementById("counterAudio");
 
 gameWindow.onclick = function (e) {
     var rect = gameWindow.getBoundingClientRect();
@@ -39,37 +47,46 @@ gameWindow.onclick = function (e) {
         case "key":
             if (gameState.keyPickedUp == false) {
                 changeInventory("Rusty key", "add");
-                console.log("Oh wow, You found a key!")
+                showMessage(playerTalk, "Oh wow, i found a key", heroAudio);
                 gameState.keyPickedUp = true;
             }
             else {
-                console.log("Oh wow, You found nothing!")
+                showMessage(playerTalk, "Oh wow, i found nothing", heroAudio);
             }
             
             break;
         case "well":
             if (gameState.luigiPickedUp == false){
-                console.log("It's Luigi time.")
+                showLuigi();
+                showMessage(otherTalk, "Luigi time", counterAudio);
+                setTimeout(showMessage, 4000, playerTalk, "Why hello Luigi. Why are you in a pit? hold on i'll put you in my pocket.", heroAudio)
+                setTimeout(showMessage, 8000 , otherTalk, "Here we go!", counterAudio);
+                setTimeout(showLuigi, 8000);
                 changeInventory("Luigi", "add");
                 gameState.luigiPickedUp = true;
             }
             else {
-                console.log("you only get 1 luigi >:(")
+                showMessage(playerTalk, "No more Luigi's to be found.", heroAudio);
             }
             
             break;
         case "doorWizardHut":
             if (checkItem("Rusty key")) {
-                console.log("I opened the door. Yeah!");
+                showMessage(playerTalk, "I opened the door", heroAudio);
             } else if (checkItem("Luigi")) {
-                changeInventory("Luigi", "delete", "inv-Luigi")
-                console.log("Oh no I lost the luigi and it didn't open the door.. Feel kinda stupid..");
+                showLuigi();
+                showMessage(otherTalk, "Aaaaaaahhhhhh!", counterAudio);
+                changeInventory("Luigi", "delete", "inv-Luigi");
+                setTimeout(showMessage, 4000, playerTalk, "Ah shit, Luigi fucking died trying to open the door.", heroAudio)
             } else {
-                console.log("Fuck this door is locked and I don't have a key. boohoo :(");
+                showMessage(playerTalk, "I ain't got no key.", heroAudio);
             }
             break;
         case "statue":
-            console.log("hey you.. wanna know where the key is? It's by the graves.");
+            if (checkItem("Luigi")){
+                showMessage(playerTalk, "Luigi what are you doing!")
+            }
+            showMessage(playerTalk, "*you inspect the statue... and yes it is in fact a statue.*", heroAudio);
             break;
 
         default:
@@ -120,4 +137,31 @@ function updateInventory(inventory, inventoryList){
      */
 function checkItem(itemName) {
     return gameState.inventory.includes(itemName);
+}
+
+function showLuigi(){
+    luigiHead.style.opacity = 1;
+    setTimeout(hideLuigi,4000,luigiHead);
+}
+
+function hideLuigi(){
+    luigiHead.style.opacity = 0;
+}
+
+/**
+ * 
+ * @param {getElementById} targetBubble 
+ * @param {string} message 
+ * @param {getElementById} targetSound 
+ */
+function showMessage(targetBubble, message, targetSound){
+    targetSound.play();
+    targetBubble.innerText = message;
+    targetBubble.style.opacity = 1;
+    setTimeout(hideMessage,4000,targetBubble);
+}
+
+
+function hideMessage(targetBubble, targetSound){
+    targetBubble.style.opacity = 0;
 }

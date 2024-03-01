@@ -34,8 +34,8 @@ body {
 #setMainDialog {
     position: relative;
     width: 800px;
-    height: 64px;
-    background-color: #442c1c;
+    height: 68px;
+    background-color: #000000;
 }
 
 #heroAvatar {
@@ -49,11 +49,18 @@ body {
     width: 300px;
     color: white;
     margin-left: 100px;
+    opacity: 0;
+    transition: all 1s ease-in-out;
+    user-select: none;
 }
 
 #counterSpeech {
     width: 300px;
-    background-color: #FFFFFF;
+    color: #FFFFFF;
+    right: 100px;
+    opacity: 0;
+    user-select: none;
+    transition: all 1s ease-in-out;
 }
 
 #counterAvatar {
@@ -61,12 +68,16 @@ body {
     height: 100px;
     bottom: 0px;
     right: 0px;
+    user-select: none;
 }
 #luigiAvatar {
     height: 100px;
     bottom: 0px;
     right: 0px;
     margin-left: 37px;
+    user-select: none;
+    opacity: 0;
+    transition: all 1s ease-in-out;
 }
 
 #squareTree {
@@ -83,17 +94,17 @@ body {
 #key {
     width: 32px;
     height: 32px;
-    left: 86px;
-    top: 450px;
+    left: 320px;
+    top: 384px;
     opacity: 1;
     transition: all 1s ease-in-out;
 }
 
 #well {
     width: 64px;
-    height: 64px;
-    left: 288px;
-    top: 96px;
+    height: 54px;
+    left: 576px;
+    top: 416px;
 }
 
 #doorWizardHut {
@@ -101,13 +112,14 @@ body {
     height: 64px;
     left: 177px;
     top: 287px;
+    background-color: brown;
 }
 
 #statue {
-    width: 32px;
+    width: 64px;
     height: 64px;
-    left: 704px;
-    top: 287px;
+    left: 384px;
+    top: 64px;
 }
 
 #hero {
