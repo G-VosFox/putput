@@ -4,6 +4,12 @@ body {
     grid-template-rows: auto 608px auto;
 }
 
+#reset {
+    width: 40px;
+    height: 30px;
+    position: static;
+}
+
 #title {
     grid-column-start: 2;
     grid-row-start: 1;
@@ -21,10 +27,9 @@ body {
 #inventoryBox {
     width: 180px;
     height: 80px;
-    background-color: #000000;
     top: 10px;
     left: 10px;
-    color: white
+    color: white;
 }
 
 #dialogBar {
@@ -110,9 +115,8 @@ body {
 #doorWizardHut {
     width: 32px;
     height: 64px;
-    left: 177px;
-    top: 287px;
-    background-color: brown;
+    left: 32px;
+    top: 192px;
 }
 
 #statue {

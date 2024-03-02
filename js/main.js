@@ -3,17 +3,26 @@ document.getElementById("mainTitle").innerText = "Point and Click adventure game
 //Game window reference
 const gameWindow = document.getElementById("gameWindow");
 
-
 //State of the gamer gang
-gameState = {
+let gameState = {
     "inventory": [],
     "luigiPickedUp": false,
     "keyPickedUp": false
 }
 
+if (Storage) {
+    if(localStorage.gameState){
+        gameState = JSON.parse(localStorage.gameState);
+    }
+    else {
+        //saves the stringy save state
+        localStorage.setItem("gameState", JSON.stringify(gameState));
+    }
+}
+
+
 //Inventory
 let inventory = [];
-console.log(inventory);
 const inventoryList = document.getElementById("inventoryList");
 //Main Character
 const mainCharacter = document.getElementById("hero");
@@ -49,6 +58,7 @@ gameWindow.onclick = function (e) {
                 changeInventory("Rusty key", "add");
                 showMessage(playerTalk, "Oh wow, i found a key", heroAudio);
                 gameState.keyPickedUp = true;
+                saveGameState(gameState);
             }
             else {
                 showMessage(playerTalk, "Oh wow, i found nothing", heroAudio);
@@ -64,6 +74,7 @@ gameWindow.onclick = function (e) {
                 setTimeout(showLuigi, 8000);
                 changeInventory("Luigi", "add");
                 gameState.luigiPickedUp = true;
+                saveGameState(gameState);
             }
             else {
                 showMessage(playerTalk, "No more Luigi's to be found.", heroAudio);
@@ -78,15 +89,18 @@ gameWindow.onclick = function (e) {
                 showMessage(otherTalk, "Aaaaaaahhhhhh!", counterAudio);
                 changeInventory("Luigi", "delete", "inv-Luigi");
                 setTimeout(showMessage, 4000, playerTalk, "Ah shit, Luigi fucking died trying to open the door.", heroAudio)
+                saveGameState(gameState);
             } else {
-                showMessage(playerTalk, "I ain't got no key.", heroAudio);
+                showMessage(playerTalk, "A mystery door, standing in the middle of nowhere... welp i know what i'm doing with my time.", heroAudio);
             }
             break;
         case "statue":
             if (checkItem("Luigi")){
-                showMessage(playerTalk, "Luigi what are you doing!")
+                showMessage(playerTalk, "Luigi what are you doing!", heroAudio);
             }
-            showMessage(playerTalk, "*you inspect the statue... and yes it is in fact a statue.*", heroAudio);
+            else{
+                showMessage(playerTalk, "*you inspect the statue... and yes it is in fact a statue.*", heroAudio);
+            }
             break;
 
         default:
@@ -164,4 +178,22 @@ function showMessage(targetBubble, message, targetSound){
 
 function hideMessage(targetBubble, targetSound){
     targetBubble.style.opacity = 0;
+}
+
+/**
+ * 
+ * @param {Object} gameState 
+ */
+function saveGameState(gameState){
+    localStorage.gameState = JSON.stringify(gameState);
+}
+
+updateInventory(gameState.inventory, inventoryList);
+
+function resety(){//so you better not forgetti that i make the best spagetti, just as long as i don't forgetti the tometti and if you resetti, i will you regretti. this might be an indi game but it's not five nights at fretti.
+    gameState.inventory = [];
+    gameState.keyPickedUp = false;
+    gameState.luigiPickedUp = false;
+    updateInventory(gameState.inventory, inventoryList);
+    saveGameState(gameState);
 }
