@@ -27,17 +27,24 @@ const inventoryList = document.getElementById("inventoryList");
 //Main Character
 const mainCharacter = document.getElementById("hero");
 const offsetCharacter = 16;
-const tree1 = document.getElementById("squareTree");
 
 //speeches
-const playerTalk = document.getElementById("heroSpeech");
-const otherTalk = document.getElementById("counterSpeech");
+const heroSpeech = document.getElementById("heroSpeech");
+const counterSpeech = document.getElementById("counterSpeech");
 
+//npc's
 const luigiHead = document.getElementById("luigiAvatar");
 
 //audio for dialog
 const heroAudio = document.getElementById("heroAudio");
-const counterAudio = document.getElementById("counterAudio");
+const luigiNoises = document.getElementById("luigiNoises");
+const luigiTime = document.getElementById("luigiTime");
+const hereWeGo = document.getElementById("hereWeGo");
+const yahoo = document.getElementById("yahoo");
+
+//explosion
+const explosion = document.getElementById("explosion");
+const explosionAudio = document.getElementById("explosionAudio")
 
 gameWindow.onclick = function (e) {
     var rect = gameWindow.getBoundingClientRect();
@@ -56,50 +63,46 @@ gameWindow.onclick = function (e) {
         case "key":
             if (gameState.keyPickedUp == false) {
                 changeInventory("Rusty key", "add");
-                showMessage(playerTalk, "Oh wow, i found a key", heroAudio);
+                showMessage(heroSpeech, "Oh wow, i found a key", heroAudio);
                 gameState.keyPickedUp = true;
                 saveGameState(gameState);
             }
             else {
-                showMessage(playerTalk, "Oh wow, i found nothing", heroAudio);
+                showMessage(heroSpeech, "Oh wow, i found nothing", heroAudio);
             }
             
             break;
         case "well":
             if (gameState.luigiPickedUp == false){
                 showLuigi();
-                showMessage(otherTalk, "Luigi time", counterAudio);
-                setTimeout(showMessage, 4000, playerTalk, "Why hello Luigi. Why are you in a pit? hold on i'll put you in my pocket.", heroAudio)
-                setTimeout(showMessage, 8000 , otherTalk, "Here we go!", counterAudio);
-                setTimeout(showLuigi, 8000);
+                showMessage(counterSpeech, "Luigi time", luigiTime);
+                setTimeout(showMessage, 3000, heroSpeech, "Why hello Luigi. Why are you in a pit? hold on i'll put you in my pocket.", heroAudio)
+                setTimeout(showMessage, 6000 , counterSpeech, "Here we go!", hereWeGo);
+                setTimeout(showLuigi, 6000);
                 changeInventory("Luigi", "add");
                 gameState.luigiPickedUp = true;
                 saveGameState(gameState);
             }
             else {
-                showMessage(playerTalk, "No more Luigi's to be found.", heroAudio);
+                showMessage(heroSpeech, "No more Luigi's to be found.", heroAudio);
             }
             
             break;
         case "doorWizardHut":
             if (checkItem("Rusty key")) {
-                showMessage(playerTalk, "I opened the door", heroAudio);
-            } else if (checkItem("Luigi")) {
-                showLuigi();
-                showMessage(otherTalk, "Aaaaaaahhhhhh!", counterAudio);
-                changeInventory("Luigi", "delete", "inv-Luigi");
-                setTimeout(showMessage, 4000, playerTalk, "Ah shit, Luigi fucking died trying to open the door.", heroAudio)
-                saveGameState(gameState);
+                showMessage(heroSpeech, "I opened the door", heroAudio);
             } else {
-                showMessage(playerTalk, "A mystery door, standing in the middle of nowhere... welp i know what i'm doing with my time.", heroAudio);
+                showMessage(heroSpeech, "A mystery door, standing in the middle of nowhere... welp i know what i'm doing with my time.", heroAudio);
             }
             break;
         case "statue":
             if (checkItem("Luigi")){
-                showMessage(playerTalk, "Luigi what are you doing!", heroAudio);
+                showMessage(heroSpeech, "Luigi what are you doing!", heroAudio);
+                setTimeout(showMessage, 3000, counterSpeech, "YAAAAHOOOOOOO!!", yahoo);
+                setTimeout(showLuigi, 3000);
             }
             else{
-                showMessage(playerTalk, "*you inspect the statue... and yes it is in fact a statue.*", heroAudio);
+                showMessage(heroSpeech, "*you inspect the statue... and yes it is in fact a statue.*", heroAudio);
             }
             break;
 
@@ -155,12 +158,14 @@ function checkItem(itemName) {
 
 function showLuigi(){
     luigiHead.style.opacity = 1;
-    setTimeout(hideLuigi,4000,luigiHead);
+    setTimeout(hideLuigi,3000,luigiHead);
 }
 
 function hideLuigi(){
     luigiHead.style.opacity = 0;
 }
+
+1700
 
 /**
  * 
@@ -172,7 +177,7 @@ function showMessage(targetBubble, message, targetSound){
     targetSound.play();
     targetBubble.innerText = message;
     targetBubble.style.opacity = 1;
-    setTimeout(hideMessage,4000,targetBubble);
+    setTimeout(hideMessage,3000,targetBubble);
 }
 
 

@@ -135,7 +135,15 @@ body {
 
 }
 
-#tileMap {}
+#tileMap {
+
+}
+
+#explosion {
+    top:46px;
+    left: 384px;
+    opacity: 0;
+}
 
 .background {
     position: absolute;
