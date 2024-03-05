@@ -46,6 +46,15 @@ const yahoo = document.getElementById("yahoo");
 const explosion = document.getElementById("explosion");
 const explosionAudio = document.getElementById("explosionAudio")
 
+//statue
+const wholeAmongus = document.getElementById("wholeAmongus")
+const halfAmongus = document.getElementById("halfAmongus")
+
+if (gameState.keyPickedUp == true){
+    halfAmongus.style.opacity = 1;
+    wholeAmongus.style.opacity = 0
+}
+
 gameWindow.onclick = function (e) {
     var rect = gameWindow.getBoundingClientRect();
     var x = e.clientX - rect.left;
@@ -60,18 +69,6 @@ gameWindow.onclick = function (e) {
     }
 
     switch (e.target.id) {
-        case "key":
-            if (gameState.keyPickedUp == false) {
-                changeInventory("Rusty key", "add");
-                showMessage(heroSpeech, "Oh wow, i found a key", heroAudio);
-                gameState.keyPickedUp = true;
-                saveGameState(gameState);
-            }
-            else {
-                showMessage(heroSpeech, "Oh wow, i found nothing", heroAudio);
-            }
-            
-            break;
         case "well":
             if (gameState.luigiPickedUp == false){
                 showLuigi();
@@ -79,7 +76,7 @@ gameWindow.onclick = function (e) {
                 setTimeout(showMessage, 3000, heroSpeech, "Why hello Luigi. Why are you in a pit? hold on i'll put you in my pocket.", heroAudio)
                 setTimeout(showMessage, 6000 , counterSpeech, "Here we go!", hereWeGo);
                 setTimeout(showLuigi, 6000);
-                changeInventory("Luigi", "add");
+                setTimeout(changeInventory, 9000, "Luigi", "add");
                 gameState.luigiPickedUp = true;
                 saveGameState(gameState);
             }
@@ -89,17 +86,27 @@ gameWindow.onclick = function (e) {
             
             break;
         case "doorWizardHut":
-            if (checkItem("Rusty key")) {
-                showMessage(heroSpeech, "I opened the door", heroAudio);
+            if (gameState.keyPickedUp == true) {
+                showMessage(heroSpeech, "I opened the door... there is nothing on the other side", heroAudio);
+                setTimeout(showMessage, 3000, heroSpeech, "welp, don't know what i expected.", heroAudio)
             } else {
                 showMessage(heroSpeech, "A mystery door, standing in the middle of nowhere... welp i know what i'm doing with my time.", heroAudio);
             }
             break;
         case "statue":
-            if (checkItem("Luigi")){
+            if (gameState.luigiPickedUp == true && gameState.keyPickedUp == false){
                 showMessage(heroSpeech, "Luigi what are you doing!", heroAudio);
                 setTimeout(showMessage, 3000, counterSpeech, "YAAAAHOOOOOOO!!", yahoo);
                 setTimeout(showLuigi, 3000);
+                setTimeout(showExplosion,4500);
+                setTimeout(showMessage,6200,heroSpeech , "WTF just happened.", heroAudio);
+                setTimeout(showMessage, 10000, heroSpeech, "Hold on is that a key in the rubble?", heroAudio);
+                setTimeout(changeInventory, 10000, "rusty key", "add");
+                gameState.keyPickedUp = true;
+                saveGameState(gameState);
+            }
+            else if (gameState.keyPickedUp == true){
+                showMessage(heroSpeech, "*you inspect the statue... and yes there is in fact no longer a statue standing here.*", heroAudio);
             }
             else{
                 showMessage(heroSpeech, "*you inspect the statue... and yes it is in fact a statue.*", heroAudio);
@@ -165,7 +172,21 @@ function hideLuigi(){
     luigiHead.style.opacity = 0;
 }
 
-1700
+function showExplosion(){
+    explosion.style.opacity = 1;
+    explosionAudio.play();
+    halfAmongus.style.opacity = 1;
+    setTimeout(hideAmongus, 1700)
+    setTimeout(hideExplosion, 1700)
+}
+
+function hideExplosion() {
+    explosion.style.opacity = 0;
+}
+
+function hideAmongus(){
+    wholeAmongus.style.opacity = 0;
+}
 
 /**
  * 
@@ -195,7 +216,7 @@ function saveGameState(gameState){
 
 updateInventory(gameState.inventory, inventoryList);
 
-function resety(){//so you better not forgetti that i make the best spagetti, just as long as i don't forgetti the tometti and if you resetti, i will you regretti. this might be an indi game but it's not five nights at fretti.
+function resety(){//so you better not forgetti that i make the best spagetti.well, just as long as i don't forgetti the tometti. i will you regretti if you try to resetti. this might be an indi game but it's not five nights at fretti's.
     gameState.inventory = [];
     gameState.keyPickedUp = false;
     gameState.luigiPickedUp = false;

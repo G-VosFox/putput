@@ -85,26 +85,6 @@ body {
     transition: all 1s ease-in-out;
 }
 
-#squareTree {
-    width: 64px;
-    height: 64px;
-    background-color: #00ff00;
-    left: 400px;
-    top: 150px;
-    opacity: 1;
-    transition: all 1s ease-in-out;
-
-}
-
-#key {
-    width: 32px;
-    height: 32px;
-    left: 320px;
-    top: 384px;
-    opacity: 1;
-    transition: all 1s ease-in-out;
-}
-
 #well {
     width: 64px;
     height: 54px;
@@ -135,12 +115,19 @@ body {
 
 }
 
-#tileMap {
-
-}
-
 #explosion {
     top:46px;
+    left: 384px;
+    opacity: 0;
+}
+
+#wholeAmongus{
+    top: 64px;
+    left: 384px;
+}
+
+#halfAmongus{
+    top: 64px;
     left: 384px;
     opacity: 0;
 }
